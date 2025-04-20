@@ -25,6 +25,21 @@ Sample Output:
 If the server is running and it is healthy, you should see the message 'Hello World' in the response.
 Also, depending on the framework you are using, there will be logs in the terminal:
 
+## Status Endpoint
+
+To test the Status endpoint, execute the following curl command:
+
+```bash
+curl http://localhost:PORT/status
+```
+
+Sample Output:
+```json
+{"status": "OK"}
+```
+If the server is running and it is healthy, you should see the status 'OK' in the response.
+Also, depending on the framework you are using, there will be logs in the terminal:
+
 ```bash
 make run
 [GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
