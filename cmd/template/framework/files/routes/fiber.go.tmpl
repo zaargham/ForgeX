@@ -13,6 +13,7 @@ import (
 
 func (s *FiberServer) RegisterFiberRoutes() {
 	s.App.Get("/", s.HelloWorldHandler)
+	s.App.Get("/status", s.statusHandler)
   {{if ne .DBDriver "none"}}
 	s.App.Get("/health", s.healthHandler)
   {{end}}
@@ -26,6 +27,14 @@ func (s *FiberServer) RegisterFiberRoutes() {
 func (s *FiberServer) HelloWorldHandler(c *fiber.Ctx) error {
 	resp := fiber.Map{
 		"message": "Hello World",
+	}
+
+	return c.JSON(resp)
+}
+
+func (s *FiberServer) statusHandler(c *fiber.Ctx) error {
+	resp := fiber.Map{
+		"status": "OK",
 	}
 
 	return c.JSON(resp)

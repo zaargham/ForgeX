@@ -20,6 +20,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 	r.Use(middleware.Logger)
 
 	r.Get("/", s.HelloWorldHandler)
+	r.Get("/status", s.statusHandler)
   {{if ne .DBDriver "none"}}
 	r.Get("/health", s.healthHandler)
   {{end}}
@@ -34,6 +35,18 @@ func (s *Server) RegisterRoutes() http.Handler {
 func (s *Server) HelloWorldHandler(w http.ResponseWriter, r *http.Request) {
 	resp := make(map[string]string)
 	resp["message"] = "Hello World"
+
+	jsonResp, err := json.Marshal(resp)
+	if err != nil {
+		log.Fatalf("error handling JSON marshal. Err: %v", err)
+	}
+
+	_, _ = w.Write(jsonResp)
+}
+
+func (s *Server) statusHandler(w http.ResponseWriter, r *http.Request) {
+	resp := make(map[string]string)
+	resp["status"] = "OK"
 
 	jsonResp, err := json.Marshal(resp)
 	if err != nil {

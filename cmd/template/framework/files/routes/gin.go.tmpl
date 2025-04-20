@@ -17,6 +17,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 	r := gin.Default()
 
 	r.GET("/", s.HelloWorldHandler)
+	r.GET("/status", s.statusHandler)
   {{if ne .DBDriver "none"}}
 	r.GET("/health", s.healthHandler)
   {{end}}
@@ -71,3 +72,7 @@ func (s *Server) websocketHandler(c *gin.Context) {
 	}
 }
 {{end}}
+
+func (s *Server) statusHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"status": "OK"})
+}
